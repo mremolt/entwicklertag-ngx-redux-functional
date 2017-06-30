@@ -1,0 +1,12 @@
+{
+  "extends": "./config/tsconfig.common.json",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "build",
+    "declaration": false,
+    "types": ["node", "mocha", "chai"],
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["src/**/*.ts"]
+}

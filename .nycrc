@@ -1,0 +1,12 @@
+{
+  "report-dir": "./report/coverage",
+  "reporter": [
+    "lcov",
+    "html",
+    "text"
+  ],
+  "exclude": [
+    "config",
+    "**/*.spec.ts"
+  ]
+}

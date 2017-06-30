@@ -1,0 +1,18 @@
+{
+  "extends": "./config/tsconfig.common.json",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "outDir": "build/ngc/src",
+    "declaration": false,
+    "types": ["node", "mocha", "chai"],
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["src/**/*.ts"],
+  "angularCompilerOptions": {
+    "skipMetadataEmit": true,
+    "genDir": "compiled",
+    "debug": true,
+    "trace": true
+  }
+}
