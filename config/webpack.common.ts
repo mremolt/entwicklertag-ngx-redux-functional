@@ -3,9 +3,31 @@ import { root } from './helpers';
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const TS_VERSION = require('typescript').version;
 
-export default function(options: any) {
+function orderByList(list: string[]) {
+  return function(chunk1: any, chunk2: any) {
+    const index1 = list.indexOf(chunk1.names[0]);
+    const index2 = list.indexOf(chunk2.names[0]);
+    if (index2 === -1 || index1 < index2) {
+      return -1;
+    }
+    if (index1 === -1 || index1 > index2) {
+      return 1;
+    }
+    return 0;
+  };
+}
+
+const extractSASS = new ExtractTextPlugin('[name]-sass.css');
+const extractLESS = new ExtractTextPlugin('[name]-less.css');
+
+export default function(options: any): any {
   const isProd: boolean = options.ENV === 'production';
+
+  console.log(options);
 
   return {
     entry: {
@@ -30,9 +52,13 @@ export default function(options: any) {
         'core-js/es7/reflect',
         'zone.js/dist/zone'
       ],
-      main: root('src', options.AOT ? 'main.aot.ts' : 'main.ts')
+      main: root('src', options.AOT ? 'main.aot.ts' : 'main.ts'),
+      css: root('src', 'styles', 'application.scss')
     },
-    resolve: { extensions: ['.ts', '.js', '.json'], modules: [root('src'), root('node_modules')] },
+    resolve: {
+      extensions: ['.ts', '.js', '.json'],
+      modules: [root('src'), root('node_modules')]
+    },
     module: {
       exprContextCritical: false,
       rules: [
@@ -40,18 +66,66 @@ export default function(options: any) {
         { test: /\.html$/, use: 'raw-loader' },
         { test: /\.(jpg|png|gif)$/, use: 'file-loader' },
         { test: /\.(eot|woff2?|svg|ttf)([\?]?.*)$/, use: 'file-loader' },
-        { test: /\.css$/, loader: 'raw-loader' },
-        { test: /\.less$/, loaders: ['raw-loader', 'less-loader', 'postcss-loader'] },
-        { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader', 'postcss-loader'] }
+        { test: /\.css$/, use: 'raw-loader' },
+        {
+          test: /\.js$/,
+          use: ['source-map-loader'],
+          enforce: 'pre',
+          exclude: [root('node_modules/@angular/compiler')]
+        },
+        {
+          test: /\.less$/,
+          use: ['raw-loader', 'postcss-loader', 'sass-loader'],
+          include: root('src', 'app')
+        },
+        {
+          test: /\.less$/,
+          use: extractLESS.extract({
+            fallback: 'raw-loader',
+            use: [
+              'css-loader',
+              { loader: 'postcss-loader', options: { sourceMap: true } },
+              'less-loader'
+            ]
+          }),
+          include: root('src', 'styles')
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            { loader: 'raw-loader' },
+            { loader: 'postcss-loader', options: { sourceMap: true } },
+            { loader: 'sass-loader', options: { sourceMap: true } }
+          ],
+          include: root('src', 'app')
+        },
+        {
+          test: /\.scss$/,
+          use: extractSASS.extract({
+            fallback: 'raw-loader',
+            use: [
+              { loader: 'css-loader', options: { sourceMap: true } },
+              { loader: 'postcss-loader', options: { sourceMap: true } },
+              { loader: 'sass-loader', options: { sourceMap: true } }
+            ]
+          }),
+          include: root('src', 'styles')
+        }
       ]
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin(),
+      new FriendlyErrorsWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',
-        title: 'FOO',
-        chunksSortMode: 'dependency',
+        title: 'DCS Angular Starter',
+        chunksSortMode: orderByList([
+          'common',
+          'polyfills',
+          'vendor',
+          'main',
+          'css'
+        ]),
         inject: 'body'
       }),
       new webpack.optimize.CommonsChunkPlugin({
@@ -67,39 +141,17 @@ export default function(options: any) {
         name: 'common'
       }),
       new ngcWebpack.NgcWebpackPlugin({
-        /**
-         * If false the plugin is a ghost, it will not perform any action.
-         * This property can be used to trigger AOT on/off depending on your build target (prod, staging etc...)
-         *
-         * The state can not change after initializing the plugin.
-         * @default true
-         */
         disabled: !options.AOT,
         tsConfig: root('tsconfig.prod.json'),
-        /**
-         * A path to a file (resource) that will replace all resource referenced in @Components.
-         * For each `@Component` the AOT compiler compiles it creates new representation for the templates (html, styles)
-         * of that `@Components`. It means that there is no need for the source templates, they take a lot of
-         * space and they will be replaced by the content of this resource.
-         *
-         * To leave the template as is set to a falsy value (the default).
-         *
-         * TIP: Use an empty file as an overriding resource. It is recommended to use a ".js" file which
-         * usually has small amount of loaders hence less performance impact.
-         *
-         * > This feature is doing NormalModuleReplacementPlugin for AOT compiled resources.
-         *
-         * ### resourceOverride and assets
-         * If you reference assets in your styles/html that are not inlined and you expect a loader (e.g. url-loader)
-         * to copy them, don't use the `resourceOverride` feature as it does not support this feature at the moment.
-         * With `resourceOverride` the end result is that webpack will replace the asset with an href to the public
-         * assets folder but it will not copy the files. This happens because the replacement is done in the AOT compilation
-         * phase but in the bundling it won't happen (it's being replaced with and empty file...)
-         *
-         * @default undefined
-         */
         resourceOverride: root('config/resource-override.js')
-      })
+      }),
+      new webpack.DefinePlugin({
+        ENV: JSON.stringify(options.ENV),
+        IE: '11',
+        TS_VERSION: JSON.stringify(TS_VERSION)
+      }),
+      extractSASS,
+      extractLESS
     ]
   };
 }

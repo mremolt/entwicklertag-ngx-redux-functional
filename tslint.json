@@ -1,37 +1,20 @@
 {
   "defaultSeverity": "error",
-  "extends": [
-    "tslint:recommended"
-  ],
-  "rulesDirectory": [
-    "node_modules/codelyzer"
-  ],
+  "extends": ["tslint:recommended"],
+  "rulesDirectory": ["node_modules/codelyzer"],
   "jsRules": {},
   "rules": {
-    "arrow-parens": [
-      true,
-      "ban-single-arg-parens"
-    ],
-    "no-console": [
-      false
-    ],
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "no-console": [false],
     "no-angle-bracket-type-assertion": false,
     "no-empty-interface": false,
     "no-unused-expression": false,
     "no-var-requires": false,
-    "only-arrow-functions": [
-      false
-    ],
-    "ordered-imports": [
-      false
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "trailing-comma": [
-      false
-    ],
+    "object-literal-sort-keys": false,
+    "only-arrow-functions": [false],
+    "ordered-imports": [false],
+    "quotemark": [true, "single"],
+    "trailing-comma": [false],
     "whitespace": [
       true,
       "check-branch",
@@ -42,25 +25,11 @@
       "check-type",
       "check-preblock"
     ],
-    "angular-whitespace": [
-      true,
-      "check-interpolation",
-      "check-pipe"
-    ],
+    "angular-whitespace": [true, "check-interpolation", "check-pipe"],
     "banana-in-box": true,
     "templates-no-negated-async": true,
-    "directive-selector": [
-      true,
-      "attribute",
-      "sg",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "dcs",
-      "kebab-case"
-    ],
+    "directive-selector": [true, "attribute", "sg", "camelCase"],
+    "component-selector": [true, "element", "dcs", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
@@ -70,11 +39,7 @@
     "no-forward-ref": false,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
-    "pipe-naming": [
-      true,
-      "camelCase",
-      "dcs"
-    ],
+    "pipe-naming": [true, "camelCase", "dcs"],
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "templates-use-public": true,

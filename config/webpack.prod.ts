@@ -6,17 +6,18 @@ import commonConfig from './webpack.common';
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const ENV = (process.env.ENV = process.env.NODE_ENV = 'development');
+const ENV = (process.env.ENV = process.env.NODE_ENV = 'production');
 const HMR = hasProcessFlag('hot');
 const AOT = process.env.BUILD_AOT || hasNpmFlag('aot');
 
-let options = { AOT, ENV, HMR };
+const options = { AOT, ENV, HMR };
 
 export default webpackMerge(commonConfig(options), {
   devtool: 'source-map',
 
   output: {
     path: root('build', 'production'),
+    publicPath: 'http://localhost:8080/',
     filename: '[name].[hash].bundle.js',
     sourceMapFilename: '[file].map',
     chunkFilename: '[name]-[id].[chunkhash].chunk.js'
@@ -26,13 +27,22 @@ export default webpackMerge(commonConfig(options), {
       {
         test: /\.ts$/,
         use: [
-          { loader: 'ng-router-loader', options: { aot: !!options.AOT, genDir: root('compiled') } },
-          { loader: 'ts-loader', options: { transpileOnly: false, configFileName: 'tsconfig.prod.json' } }
+          {
+            loader: 'ng-router-loader',
+            options: { aot: !!options.AOT, genDir: root('compiled') }
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: false,
+              configFile: 'tsconfig.prod.json'
+            }
+          }
         ],
         exclude: [/\.(spec|e2e)\.ts$/]
       }
     ]
-  },
+  }
 
-  plugins: [new webpack.optimize.UglifyJsPlugin([options])]
+  // plugins: [new webpack.optimize.UglifyJsPlugin()]
 });

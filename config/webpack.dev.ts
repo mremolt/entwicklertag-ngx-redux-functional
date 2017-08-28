@@ -9,7 +9,7 @@ const ENV = (process.env.ENV = process.env.NODE_ENV = 'development');
 const HMR = hasProcessFlag('hot');
 const AOT = false;
 
-let options = { AOT, ENV, HMR };
+const options = { AOT, ENV, HMR };
 
 export default webpackMerge(commonConfig(options), {
   devtool: 'cheap-module-eval-source-map',
@@ -19,10 +19,10 @@ export default webpackMerge(commonConfig(options), {
   },
 
   output: {
-    path: root('build', 'development'),
+    chunkFilename: '[name]-[id].chunk.js',
     filename: '[name].bundle.js',
-    sourceMapFilename: '[file].map',
-    chunkFilename: '[name]-[id].chunk.js'
+    path: root('build', 'development'),
+    sourceMapFilename: '[file].map'
   },
 
   module: {
@@ -30,22 +30,36 @@ export default webpackMerge(commonConfig(options), {
       {
         test: /\.ts$/,
         use: [
-          { loader: '@angularclass/hmr-loader', options: { pretty: true, prod: false } },
-          { loader: 'ts-loader', options: { transpileOnly: true, configFileName: 'tsconfig.dev.json' } },
+          {
+            loader: '@angularclass/hmr-loader',
+            options: { pretty: true, prod: false }
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              configFile: 'tsconfig.dev.json'
+            }
+          },
           { loader: 'angular2-template-loader' },
-          { loader: 'ng-router-loader', options: { aot: options.AOT } }
+          { loader: 'ng-router-loader', options: { aot: false } }
         ],
         exclude: [/\.(spec|e2e)\.ts$/]
       }
     ]
   },
 
-  plugins: [new ForkTsCheckerWebpackPlugin()],
+  plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      tsconfig: root('tsconfig.dev.json')
+    })
+  ],
 
   devServer: {
     port: 3000,
     host: '0.0.0.0',
     historyApiFallback: true,
+    quiet: true,
     watchOptions: {
       // if you're using Docker you may need this
       // aggregateTimeout: 300,

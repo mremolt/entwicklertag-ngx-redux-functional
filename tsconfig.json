@@ -7,5 +7,5 @@
     "types": ["node", "mocha", "chai"],
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/custom-typings.d.ts", "src/**/*.ts"]
 }

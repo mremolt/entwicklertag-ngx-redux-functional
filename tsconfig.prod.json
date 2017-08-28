@@ -11,8 +11,6 @@
   "include": ["src/**/*.ts"],
   "angularCompilerOptions": {
     "skipMetadataEmit": true,
-    "genDir": "compiled",
-    "debug": true,
-    "trace": true
+    "genDir": "compiled"
   }
 }
