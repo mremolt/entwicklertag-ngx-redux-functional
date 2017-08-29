@@ -1,6 +1,0 @@
---compilers ts:ts-node/register,tsx:ts-node/register
---require ./config/mocha
---colors
---slow 75
---ui bdd
-src/**/*.spec.ts

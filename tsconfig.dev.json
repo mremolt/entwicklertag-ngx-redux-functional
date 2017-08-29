@@ -5,7 +5,6 @@
     "module": "commonjs",
     "outDir": "build",
     "declaration": false,
-    "types": ["node", "mocha", "chai"],
     "typeRoots": ["node_modules/@types"]
   },
   "include": ["src/custom-typings.d.ts", "src/main.ts", "src/app/**/*.ts"]

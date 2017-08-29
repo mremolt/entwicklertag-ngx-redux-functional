@@ -5,7 +5,6 @@
     "module": "es2015",
     "outDir": "./build/ngc/src",
     "declaration": false,
-    "types": ["node", "mocha", "chai"],
     "typeRoots": ["node_modules/@types"]
   },
   "include": ["src/**/*.module.ts"],

@@ -3,9 +3,8 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "outDir": "build",
-    "types": ["node", "mocha", "chai"],
-    "typeRoots": ["node_modules/@types"]
+    "outDir": "build"
+    // "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/custom-typings.d.ts", "src/**/*.ts"]
+  "include": ["src/custom-typings.d.ts", "src/**/*.ts", "spec/**/*.ts"]
 }
