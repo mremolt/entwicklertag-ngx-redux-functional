@@ -8,8 +8,9 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ENV = (process.env.ENV = process.env.NODE_ENV = 'development');
 const HMR = hasProcessFlag('hot');
 const AOT = false;
+const APP_ENV = process.env.APP_ENV || ENV;
 
-const options = { AOT, ENV, HMR };
+const options = { AOT, ENV, HMR, APP_ENV };
 
 export default webpackMerge(commonConfig(options), {
   devtool: 'cheap-module-eval-source-map',
@@ -41,8 +42,7 @@ export default webpackMerge(commonConfig(options), {
               configFile: 'tsconfig.dev.json'
             }
           },
-          { loader: 'angular2-template-loader' },
-          { loader: 'ng-router-loader', options: { aot: false } }
+          { loader: 'angular2-template-loader' }
         ],
         exclude: [/\.(spec|e2e)\.ts$/]
       }

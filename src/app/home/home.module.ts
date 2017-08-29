@@ -1,26 +1,19 @@
-import { HomeActions } from './backend/home.actions';
 import { NgModule, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NgRedux } from '@angular-redux/store';
-import {
-  DynamicModule,
-  RootReducer,
-  RootEpic,
-  ISubState,
-  APP_REDUCERS,
-  IReducerConfig,
-  APP_EPICS,
-  IAppEpic,
-  APP_TRANSLATIONS
-} from '@dcs/ngx-utils';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { APP_REDUCERS, APP_EPICS, APP_TRANSLATIONS } from '@dcs/ngx-utils';
 
-import { HomeComponent } from './home.component';
+import { HomeActions } from './backend/home.actions';
 import { homeReducer } from './backend/home.reducer';
 import { greetDcsEpic } from './backend/home.epics';
+
+import { HomeComponent } from './home.component';
+
 import { translations as en } from './locale/en';
 import { translations as de } from './locale/de';
+import { translations } from '../locale/en';
 
 const routes: Routes = [{ path: '', component: HomeComponent }];
 
@@ -47,16 +40,4 @@ const routes: Routes = [{ path: '', component: HomeComponent }];
     }
   ]
 })
-export class HomeModule {
-  // constructor(
-  //   translate: TranslateService,
-  //   rootReducer: RootReducer,
-  //   rootEpic: RootEpic,
-  //   store: NgRedux<ISubState>,
-  //   @Inject(APP_REDUCERS) appReducers: IReducerConfig[],
-  //   @Inject(APP_EPICS) appEpics: IAppEpic[],
-  //   @Inject(APP_TRANSLATIONS) appTranslations: any
-  // ) {
-  //   // super(translate, appTranslations, rootReducer, rootEpic, store, appReducers, appEpics);
-  // }
-}
+export class HomeModule {}

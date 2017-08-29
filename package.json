@@ -1,19 +1,25 @@
 {
   "name": "@dcs/ngx-starter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Starting point for Angular projects at DCS Fürth",
   "main": "index.js",
   "scripts": {
-    "clean:src": "rimraf src/**/*.ngfactory.ts src/**/*.ngsummary.json src/**/*.ngsummary.ts src/**/*.ngstyle.ts",
+    "clean:src":
+      "rimraf src/**/*.ngfactory.ts src/**/*.ngsummary.json src/**/*.ngsummary.ts src/**/*.ngstyle.ts",
     "clean:artifacts": "rimraf compiled build/ngc",
+    "clean:build": "rimraf build",
     "compile": "webpack --config config/webpack.prod.ts",
     "build": "run-s compile clean:artifacts",
-    "watch": "webpack-dev-server --config config/webpack.dev.ts",
     "build:aot": "cross-env BUILD_AOT=1 npm run build",
-    "serve:prod": "serve build/production -p 8080 -c-1 -s"
+    "build:production": "cross-env APP_ENV=production npm run build:aot",
+    "build:staging": "cross-env APP_ENV=staging npm run build:aot",
+    "watch": "webpack-dev-server --config config/webpack.dev.ts",
+    "watch:hmr": "npm run watch -- --inline --hot",
+    "serve:production": "serve build/production -p 8080 -c-1 -s",
+    "serve:staging": "serve build/staging -p 8080 -c-1 -s"
   },
   "keywords": [],
-  "author": "",
+  "author": "Marc Remolt <marc.remolt@dcs-fuerth.de>",
   "license": "ISC",
   "devDependencies": {
     "@angular/compiler": "^4.3.6",
@@ -40,10 +46,10 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "mocha": "^3.5.0",
-    "ng-router-loader": "^2.1.0",
     "ngc-webpack": "^3.2.2",
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.1.1",
+    "offline-plugin": "^4.8.3",
     "postcss-loader": "^2.0.6",
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.6",
@@ -54,6 +60,7 @@
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "typescript": "^2.5.1",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.2",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.0"
@@ -69,12 +76,15 @@
     "@angular/platform-browser-dynamic": "^4.3.6",
     "@angular/router": "^4.3.6",
     "@angularclass/hmr": "^2.1.3",
-    "@dcs/ngx-utils": "0.0.5",
+    "@dcs/ngx-utils": "0.0.6",
     "@ngx-translate/core": "^7.2.0",
     "bootstrap": "^4.0.0-beta",
+    "classlist-polyfill": "^1.2.0",
+    "console-polyfill": "^0.3.0",
     "core-js": "^2.5.0",
     "font-awesome": "^4.7.0",
     "immutable": "^4.0.0-rc.2",
+    "intl": "^1.2.5",
     "moment": "^2.18.1",
     "normalizr": "^3.2.3",
     "redux": "^3.7.2",
@@ -85,6 +95,7 @@
     "reselect": "^3.0.1",
     "rxjs": "^5.4.3",
     "validator": "^8.1.0",
+    "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.17"
   }
 }

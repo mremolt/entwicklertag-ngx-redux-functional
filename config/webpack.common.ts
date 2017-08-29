@@ -1,5 +1,7 @@
 import * as webpack from 'webpack';
+import * as path from 'path';
 import { root } from './helpers';
+import * as polyfills from './polyfills';
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
@@ -25,39 +27,30 @@ const extractSASS = new ExtractTextPlugin('[name]-sass.css');
 const extractLESS = new ExtractTextPlugin('[name]-less.css');
 
 export default function(options: any): any {
-  const isProd: boolean = options.ENV === 'production';
-
-  console.log(options);
+  const Environment = require(root('src', 'environments', options.APP_ENV))
+    .default;
+  const environment = new Environment();
 
   return {
     entry: {
-      polyfills: [
-        'core-js/es6/symbol',
-        'core-js/es6/object',
-        'core-js/es6/function',
-        'core-js/es6/parse-int',
-        'core-js/es6/parse-float',
-        'core-js/es6/number',
-        'core-js/es6/math',
-        'core-js/es6/string',
-        'core-js/es6/date',
-        'core-js/es6/array',
-        'core-js/es6/regexp',
-        'core-js/es6/map',
-        'core-js/es6/set',
-        'core-js/es6/weak-map',
-        'core-js/es6/weak-set',
-        'core-js/es6/typed',
-        'core-js/es6/reflect',
-        'core-js/es7/reflect',
-        'zone.js/dist/zone'
-      ],
+      polyfills: polyfills.IE11,
       main: root('src', options.AOT ? 'main.aot.ts' : 'main.ts'),
       css: root('src', 'styles', 'application.scss')
     },
+    output: {
+      path: root('build', options.APP_ENV),
+      publicPath: 'http://localhost:8080/',
+      filename: '[name].[hash].bundle.js',
+      sourceMapFilename: '[file].map',
+      chunkFilename: '[name]-[id].[chunkhash].chunk.js'
+    },
+
     resolve: {
       extensions: ['.ts', '.js', '.json'],
-      modules: [root('src'), root('node_modules')]
+      modules: [root('src'), root('node_modules')],
+      alias: {
+        './environment': root('src', 'environments', options.APP_ENV + '.ts')
+      }
     },
     module: {
       exprContextCritical: false,
@@ -119,11 +112,13 @@ export default function(options: any): any {
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',
         title: 'DCS Angular Starter',
+        page: environment.settings.page,
         chunksSortMode: orderByList([
           'common',
           'polyfills',
           'vendor',
           'main',
+          'offline',
           'css'
         ]),
         inject: 'body'
@@ -146,8 +141,10 @@ export default function(options: any): any {
         resourceOverride: root('config/resource-override.js')
       }),
       new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(options.ENV),
+        // tslint:disable-next-line:object-literal-key-quotes
         ENV: JSON.stringify(options.ENV),
-        IE: '11',
+        // tslint:disable-next-line:object-literal-key-quotes
         TS_VERSION: JSON.stringify(TS_VERSION)
       }),
       extractSASS,

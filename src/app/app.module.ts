@@ -18,6 +18,7 @@ import { HomeModule } from './home/home.module';
     }),
     BrowserModule,
     AppTranslateModule,
+    // App modules
     HomeModule
   ],
   providers: [
