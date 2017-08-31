@@ -32,8 +32,8 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "commit": "git cz",
     "commitmsg": "validate-commit-msg",
-    "prepush": "npm run build",
-    "preversion": "run-s build",
+    "prepush": "npm run build:production",
+    "preversion": "run-s build:production",
     "version": "run-s changelog && git add CHANGELOG.md",
     "postversion": "git push --no-verify && git push --no-verify --tags"
   },
