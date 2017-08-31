@@ -29,5 +29,3 @@ global.document = document;
 global.HTMLElement = window.HTMLElement;
 global.XMLHttpRequest = window.XMLHttpRequest;
 global.Node = window.Node;
-
-console.log('hier');
