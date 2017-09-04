@@ -7,15 +7,10 @@ import {
 } from '@dcs/ngx-utils';
 export default class StagingEnvironment extends DefaultEnvironment
   implements IEnvironment {
-  public settings = {
-    apiUrl: 'http://jsonplaceholder.typicode.com',
-    throwOnSchemaError: true,
-
-    page: {
-      title: 'DCS Angular Starter (staging)',
-      base: '/'
-    }
-  };
+  public apiUrl = 'http://jsonplaceholder.typicode.com';
+  public throwOnSchemaError = true;
+  public pageTitle = 'DCS Angular Starter (staging)';
+  public base = '/';
 
   public additionalMiddleware: Middleware[] = [loggerMiddleware];
   public additionalEnhancers: GenericStoreEnhancer[] = [persistStateEnhancer()];

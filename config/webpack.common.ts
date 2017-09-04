@@ -39,7 +39,6 @@ export default function(options: any): any {
     },
     output: {
       path: root('build', options.APP_ENV),
-      publicPath: 'http://localhost:8080/',
       filename: '[name].[hash].bundle.js',
       sourceMapFilename: '[file].map',
       chunkFilename: '[name]-[id].[chunkhash].chunk.js'
@@ -111,8 +110,7 @@ export default function(options: any): any {
       new FriendlyErrorsWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',
-        title: 'DCS Angular Starter',
-        page: environment.settings.page,
+        environment,
         chunksSortMode: orderByList([
           'common',
           'polyfills',
