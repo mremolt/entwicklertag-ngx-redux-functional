@@ -1,5 +1,10 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/dcsfuerth/dcs-ngx/compare/v1.1.0...v1.2.0) (2017-09-04)
+
+
+
 <a name="1.1.0"></a>
-# 1.1.0 (2017-08-31)
+# [1.1.0](https://github.com/dcsfuerth/dcs-ngx/compare/9a2d11e...v1.1.0) (2017-08-31)
 
 
 ### Bug Fixes
