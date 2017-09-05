@@ -4,25 +4,32 @@
   "recommendations": [
     // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
     "Angular.ng-template",
+    "CoenraadS.bracket-pair-colorizer",
     "EditorConfig.editorconfig",
+    "Equinusocio.vsc-material-theme",
     "GregorBiswanger.json2ts",
     "PKief.material-icon-theme",
-    "PeterJausovec.vscode-docker",
+    "Zignd.html-css-class-completion",
     "abierbaum.vscode-file-peek",
     "christian-kohler.npm-intellisense",
     "christian-kohler.path-intellisense",
-    "danwahlin.angular2-snippets",
     "donjayamanne.githistory",
     "eamodio.gitlens",
     "eg2.tslint",
     "eg2.vscode-npm-script",
     "esbenp.prettier-vscode",
+    "infinity1207.angular2-switcher",
+    "jakethashi.vscode-angular2-emmet",
     "joelday.docthis",
+    "johnpapa.angular2",
     "kisstkondoros.vscode-codemetrics",
+    "msjsdiag.debugger-for-chrome",
     "natewallace.angular2-inline",
+    "rbbit.typescript-hero",
     "robinbentley.sass-indented",
     "stringham.move-ts",
+    "wayou.vscode-todo-highlight",
     "wcwhitehead.bootstrap-3-snippets",
-    "xabikos.JavaScriptSnippets"
+    "xabikos.javascriptsnippets"
   ]
 }

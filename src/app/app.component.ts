@@ -1,6 +1,6 @@
 import { Component, OnInit, VERSION } from '@angular/core';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { LocaleService } from '@dcs/ngx-utils';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'dcs-app',
