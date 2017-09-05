@@ -4,11 +4,13 @@
   "description": "Starting point for Angular projects at DCS Fürth",
   "main": "index.js",
   "scripts": {
-    "clean:src": "rimraf src/**/*.ngfactory.ts src/**/*.ngsummary.json src/**/*.ngsummary.ts src/**/*.ngstyle.ts",
+    "clean:src":
+      "rimraf src/**/*.ngfactory.ts src/**/*.ngsummary.json src/**/*.ngsummary.ts src/**/*.ngstyle.ts",
     "clean:artifacts": "rimraf compiled build/ngc",
     "clean:build": "rimraf build",
     "compile": "webpack --config config/webpack.prod.ts",
-    "build": "run-s clean:build lint test:coverage test:coverage:check compile docs clean:artifacts",
+    "build":
+      "run-s clean:build lint test:coverage test:coverage:check compile docs clean:artifacts",
     "build:aot": "cross-env BUILD_AOT=1 npm run build",
     "build:production": "cross-env APP_ENV=production npm run build:aot",
     "build:staging": "cross-env APP_ENV=staging npm run build:aot",
@@ -17,12 +19,16 @@
     "serve:production": "serve build/production -p 8080 -c-1 -s",
     "serve:staging": "serve build/staging -p 8080 -c-1 -s",
     "test": "jasmine-ts",
-    "test:watch": "chokidar 'spec/**/*.ts' 'src/**/*.ts' --initial -c 'npm run test'",
-    "test:coverage": "nyc  -e .ts -x \"*.spec.ts\" jasmine-ts \"spec/**/*.spec.ts\"",
-    "test:coverage:check": "nyc check-coverage --statements 80 --branches 80 --functions 80 --lines 80",
+    "test:watch":
+      "chokidar 'spec/**/*.ts' 'src/**/*.ts' --initial -c 'npm run test'",
+    "test:coverage":
+      "nyc  -e .ts -x \"*.spec.ts\" jasmine-ts \"spec/**/*.spec.ts\"",
+    "test:coverage:check":
+      "nyc check-coverage --statements 10 --branches 10 --functions 10 --lines 10",
     "test:e2e": "protractor protractor.conf.js",
     "lint": "tslint --project tsconfig.json --type-check",
-    "docs": "typedoc --out build/docs --excludeExternals --ignoreCompilerErrors --includeDeclarations --target ES6 --exclude '+(**/demo/**/*.ts|**/*.spec.ts)' --mode file ./src",
+    "docs":
+      "typedoc --out build/docs --excludeExternals --ignoreCompilerErrors --includeDeclarations --target ES6 --exclude '+(**/demo/**/*.ts|**/*.spec.ts)' --mode file ./src",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "commit": "git cz",
     "commitmsg": "validate-commit-msg",
