@@ -22,13 +22,13 @@
     "test:coverage:check": "nyc check-coverage --statements 10 --branches 10 --functions 10 --lines 10",
     "test:e2e": "protractor protractor.conf.js",
     "lint": "tslint --project tsconfig.json --type-check",
-    "docs": "typedoc --out build/docs --excludeExternals --ignoreCompilerErrors --includeDeclarations --target ES6 --exclude 'spec/**/*.ts' --mode file ./src",
+    "docs":
+      "typedoc --out build/docs --excludeExternals --ignoreCompilerErrors --includeDeclarations --target ES6 --exclude 'spec/**/*.ts' --mode file ./src",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "commit": "git cz",
     "commitmsg": "validate-commit-msg",
     "prepush": "npm run build:production",
-    "preversion": "run-s build:production",
-    "version": "run-s changelog && git add CHANGELOG.md",
+    "version": "run-s  build:production changelog && git add CHANGELOG.md",
     "postversion": "git push --no-verify && git push --no-verify --tags"
   },
   "keywords": [],
