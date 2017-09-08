@@ -1,3 +1,13 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/dcsfuerth/dcs-ngx/compare/v1.2.0...v1.3.0) (2017-09-08)
+
+
+### Bug Fixes
+
+* **build:** Fixed bug in version acript ([b176590](https://github.com/dcsfuerth/dcs-ngx/commit/b176590))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/dcsfuerth/dcs-ngx/compare/v1.1.0...v1.2.0) (2017-09-04)
 
