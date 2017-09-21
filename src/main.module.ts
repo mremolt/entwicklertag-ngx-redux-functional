@@ -1,17 +1,13 @@
 import { NgModule, ApplicationRef, NgZone, Inject } from '@angular/core';
 import { NgReduxRouterModule, NgReduxRouter } from '@angular-redux/router';
 import { HttpModule } from '@angular/http';
-import {
-  NgRedux,
-  DevToolsExtension,
-  NgReduxModule
-} from '@angular-redux/store';
+import { NgRedux, DevToolsExtension, NgReduxModule } from '@angular-redux/store';
 import {
   MainBaseModule,
   IState,
   RootReducer,
   RootEpic,
-  ReduxModule,
+  NgxUtilsModule,
   StableService,
   APP_ENVIRONMENT,
   RestService
@@ -29,13 +25,7 @@ export function provideEnvironment(): Environment {
 
 @NgModule({
   bootstrap: [AppComponent],
-  imports: [
-    HttpModule,
-    AppModule,
-    NgReduxModule,
-    NgReduxRouterModule,
-    ReduxModule
-  ],
+  imports: [HttpModule, AppModule, NgReduxModule, NgReduxRouterModule, NgxUtilsModule],
   providers: [
     RestService,
     StableService,

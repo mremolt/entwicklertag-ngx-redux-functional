@@ -1,5 +1,4 @@
 const polyfills = [
-  'core-js/es6/reflect',
   'core-js/es7/object',
   'core-js/es7/array',
   'core-js/es7/reflect',
@@ -27,5 +26,5 @@ const ie10 = [
 ];
 
 export const MODERN = polyfills;
-export const IE11 = [...polyfills, ...ie10];
-export const IE10 = [...polyfills, ...ie10, ...ie11];
+export const IE11 = [...ie11, ...polyfills];
+export const IE10 = [...ie10, ...ie11, ...polyfills];

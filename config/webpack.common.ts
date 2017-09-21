@@ -1,34 +1,20 @@
 import * as webpack from 'webpack';
 import * as path from 'path';
-import { root } from './helpers';
+import { root, orderByList } from './helpers';
 import * as polyfills from './polyfills';
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const TS_VERSION = require('typescript').version;
-
-function orderByList(list: string[]) {
-  return function(chunk1: any, chunk2: any) {
-    const index1 = list.indexOf(chunk1.names[0]);
-    const index2 = list.indexOf(chunk2.names[0]);
-    if (index2 === -1 || index1 < index2) {
-      return -1;
-    }
-    if (index1 === -1 || index1 > index2) {
-      return 1;
-    }
-    return 0;
-  };
-}
-
 const extractSASS = new ExtractTextPlugin('[name]-sass.css');
 const extractLESS = new ExtractTextPlugin('[name]-less.css');
 
 export default function(options: any): any {
-  const Environment = require(root('src', 'environments', options.APP_ENV))
-    .default;
+  const Environment = require(root('src', 'environments', options.APP_ENV)).default;
   const environment = new Environment();
 
   return {
@@ -108,36 +94,26 @@ export default function(options: any): any {
     plugins: [
       new webpack.NamedModulesPlugin(),
       new FriendlyErrorsWebpackPlugin(),
+
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',
         environment,
-        chunksSortMode: orderByList([
-          'common',
-          'polyfills',
-          'vendor',
-          'main',
-          'offline',
-          'css'
-        ]),
+        chunksSortMode: orderByList(['vendor', 'polyfills', 'main', 'offline', 'css']),
         inject: 'body'
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'polyfills',
-        chunks: ['polyfills']
-      }),
+
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
-        chunks: ['main'],
-        minChunks: module => /node_modules/.test(module.resource)
+        chunks: ['offline', 'main', 'polyfills'],
+        minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'common'
-      }),
+
       new ngcWebpack.NgcWebpackPlugin({
         disabled: !options.AOT,
         tsConfig: root('tsconfig.prod.json'),
         resourceOverride: root('config/resource-override.js')
       }),
+
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(options.ENV),
         // tslint:disable-next-line:object-literal-key-quotes
@@ -145,6 +121,18 @@ export default function(options: any): any {
         // tslint:disable-next-line:object-literal-key-quotes
         TS_VERSION: JSON.stringify(TS_VERSION)
       }),
+
+      new CopyWebpackPlugin([
+        {
+          from: 'src/assets',
+          to: 'assets'
+        },
+        {
+          from: 'src/manifest.json',
+          to: ''
+        }
+      ]),
+
       extractSASS,
       extractLESS
     ]

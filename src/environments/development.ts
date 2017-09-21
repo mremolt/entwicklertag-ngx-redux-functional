@@ -1,16 +1,10 @@
 import { Middleware } from 'redux';
-import {
-  IEnvironment,
-  loggerMiddleware,
-  ISettings,
-  DefaultEnvironment
-} from '@dcs/ngx-utils';
+import { IEnvironment, loggerMiddleware, ISettings, DefaultEnvironment } from '@dcs/ngx-utils';
 
-export default class DevelopmentEnvironment extends DefaultEnvironment
-  implements IEnvironment {
+export default class DevelopmentEnvironment extends DefaultEnvironment implements IEnvironment {
   public apiUrl = 'http://jsonplaceholder.typicode.com';
   public throwOnSchemaError = false;
-  public pageTitle = 'DCS Angular Starter';
+  public pageTitle = 'DCS Angular Starter (development)';
   public base = '/';
 
   public additionalMiddleware: Middleware[] = [loggerMiddleware];

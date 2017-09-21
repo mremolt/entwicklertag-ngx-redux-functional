@@ -7,6 +7,7 @@ import commonConfig from './webpack.common';
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const Uglify = require('uglifyjs-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const ENV = (process.env.ENV = process.env.NODE_ENV = 'production');
 const HMR = false;
@@ -44,6 +45,12 @@ export default webpackMerge(commonConfig(options), {
     new Uglify({
       sourceMap: true
     }),
+
+    new CompressionPlugin({
+      regExp: /\.css$|\.html$|\.js$|\.map$/,
+      threshold: 2 * 1024
+    }),
+
     new OfflinePlugin({
       autoUpdate: 5 * 60 * 1000,
       AppCache: false,

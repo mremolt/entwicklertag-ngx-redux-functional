@@ -11,12 +11,12 @@ if ('serviceWorker' in window.navigator) {
       OfflinePluginRuntime.applyUpdate();
     },
     onUpdated() {
-      switch (env.settings.autoUpdate) {
+      switch (env.autoUpdate) {
         case 'always':
           window.location.reload();
           break;
         case 'confirm':
-          if (window.confirm(env.settings.updateMessage)) {
+          if (window.confirm(env.updateMessage)) {
             window.location.reload();
           }
           break;

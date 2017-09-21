@@ -1,7 +1,7 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { AppTranslateModule, APP_TRANSLATIONS } from '@dcs/ngx-utils';
+import { APP_TRANSLATIONS } from '@dcs/ngx-utils';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
@@ -17,7 +17,6 @@ import { HomeModule } from './home/home.module';
       useHash: false
     }),
     BrowserModule,
-    AppTranslateModule,
     // App modules
     HomeModule
   ],
