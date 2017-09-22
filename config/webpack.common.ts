@@ -1,5 +1,4 @@
 import * as webpack from 'webpack';
-import * as path from 'path';
 import { root, orderByList } from './helpers';
 import * as polyfills from './polyfills';
 
@@ -94,6 +93,8 @@ export default function(options: any): any {
     plugins: [
       new webpack.NamedModulesPlugin(),
       new FriendlyErrorsWebpackPlugin(),
+
+      new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr/),
 
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',

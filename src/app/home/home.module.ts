@@ -1,8 +1,7 @@
-import { NgModule, Inject } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { NgRedux } from '@angular-redux/store';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { APP_REDUCERS, APP_EPICS, APP_TRANSLATIONS } from '@dcs/ngx-utils';
 
 import { HomeActions } from './backend/home.actions';
@@ -13,7 +12,6 @@ import { HomeComponent } from './home.component';
 
 import { translations as en } from './locale/en';
 import { translations as de } from './locale/de';
-import { translations } from '../locale/en';
 
 const routes: Routes = [{ path: '', component: HomeComponent }];
 

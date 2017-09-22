@@ -1,13 +1,12 @@
 import * as webpackMerge from 'webpack-merge';
-import * as webpack from 'webpack';
 
-import { hasProcessFlag, hasNpmFlag, root } from './helpers';
+import { hasNpmFlag, root } from './helpers';
 import commonConfig from './webpack.common';
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const Uglify = require('uglifyjs-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const ENV = (process.env.ENV = process.env.NODE_ENV = 'production');
 const HMR = false;
@@ -43,7 +42,10 @@ export default webpackMerge(commonConfig(options), {
 
   plugins: [
     new Uglify({
-      sourceMap: true
+      sourceMap: true,
+      uglifyOptions: {
+        mangle: false
+      }
     }),
 
     new CompressionPlugin({
@@ -57,6 +59,12 @@ export default webpackMerge(commonConfig(options), {
       ServiceWorker: {
         events: true
       }
+    }),
+
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: '../../report/bundle.html',
+      openAnalyzer: false
     })
   ]
 });

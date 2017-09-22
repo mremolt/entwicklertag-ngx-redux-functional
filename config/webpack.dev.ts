@@ -1,5 +1,4 @@
 import * as webpackMerge from 'webpack-merge';
-import * as webpack from 'webpack';
 import { hasProcessFlag, root } from './helpers';
 import commonConfig from './webpack.common';
 

@@ -12,8 +12,13 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "noUnusedLocals": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "strict": true,
-    "lib": ["dom", "es2015"]
+    "strictNullChecks": true,
+    "lib": ["dom", "es2015", "dom.iterable", "scripthost"]
   }
 }

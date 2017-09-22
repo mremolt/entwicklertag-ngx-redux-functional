@@ -1,4 +1,4 @@
-import { browser, element, by, ExpectedConditions as ec } from 'protractor';
+import { browser, element, by } from 'protractor';
 
 import { waitForElement } from './helpers/helpers';
 

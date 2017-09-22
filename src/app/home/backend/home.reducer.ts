@@ -1,4 +1,4 @@
-import { IState, IAction, ISubState } from '@dcs/ngx-utils';
+import { IAction } from '@dcs/ngx-utils';
 
 import { HOME_SET_NAME, HOME_GREET_WORLD } from './home.actions';
 
