@@ -1,7 +1,7 @@
 {
   "defaultSeverity": "error",
   "extends": ["tslint:recommended"],
-  "rulesDirectory": ["node_modules/codelyzer"],
+  "rulesDirectory": ["codelyzer", "tslint-consistent-codestyle"],
   "jsRules": {},
   "rules": {
     "arrow-parens": [true, "ban-single-arg-parens"],
@@ -9,6 +9,7 @@
     "no-angle-bracket-type-assertion": false,
     "no-empty-interface": false,
     "no-unused-expression": false,
+    "no-unused": true,
     "no-var-requires": false,
     "object-literal-sort-keys": false,
     "only-arrow-functions": [false],
@@ -25,7 +26,7 @@
       "check-type",
       "check-preblock"
     ],
-    "angular-whitespace": [true, "check-interpolation", "check-pipe"],
+    "angular-whitespace": [true, "check-interpolation"],
     "banana-in-box": true,
     "templates-no-negated-async": true,
     "directive-selector": [true, "attribute", "sg", "camelCase"],
@@ -43,7 +44,7 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "templates-use-public": true,
-    "no-access-missing-member": true,
+    "no-access-missing-member": false,
     "invoke-injectable": true,
     "template-to-ng-template": true
   }

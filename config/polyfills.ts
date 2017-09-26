@@ -3,7 +3,8 @@ const polyfills = [
   'core-js/es7/array',
   'core-js/es7/reflect',
 
-  'web-animations-js',
+  // evaluate if your project really needs animations in older browsers, quite big
+  // 'web-animations-js',
   'zone.js/dist/zone'
 ];
 
