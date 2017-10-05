@@ -1,7 +1,11 @@
 import { NgModule, ApplicationRef, NgZone, Inject } from '@angular/core';
 import { NgReduxRouterModule, NgReduxRouter } from '@angular-redux/router';
 import { HttpModule } from '@angular/http';
-import { NgRedux, DevToolsExtension, NgReduxModule } from '@angular-redux/store';
+import {
+  NgRedux,
+  DevToolsExtension,
+  NgReduxModule
+} from '@angular-redux/store';
 import {
   MainBaseModule,
   IState,
@@ -16,6 +20,7 @@ import {
 import Environment from './environment';
 import { AppModule } from './app/app.module';
 import { AppComponent } from './app/app.component';
+import { AppRestService } from './app/services/app-rest-service';
 
 console.time('bootstrap angular');
 
@@ -25,10 +30,16 @@ export function provideEnvironment(): Environment {
 
 @NgModule({
   bootstrap: [AppComponent],
-  imports: [HttpModule, AppModule, NgReduxModule, NgReduxRouterModule, NgxUtilsModule],
+  imports: [
+    HttpModule,
+    AppModule,
+    NgReduxModule,
+    NgReduxRouterModule,
+    NgxUtilsModule
+  ],
   providers: [
-    RestService,
     StableService,
+    { provide: RestService, useClass: AppRestService },
     { provide: APP_ENVIRONMENT, useFactory: provideEnvironment }
   ]
 })
