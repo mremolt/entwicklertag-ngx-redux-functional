@@ -6,14 +6,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const TS_VERSION = require('typescript').version;
 const extractSASS = new ExtractTextPlugin('[name]-sass.css');
 const extractLESS = new ExtractTextPlugin('[name]-less.css');
 
 export default function(options: any): any {
-  const Environment = require(root('src', 'environments', options.APP_ENV)).default;
+  const Environment = require(root('src', 'environments', options.APP_ENV))
+    .default;
   const environment = new Environment();
 
   return {
@@ -30,20 +30,26 @@ export default function(options: any): any {
     },
 
     resolve: {
-      extensions: ['.ts', '.js', '.json'],
-      modules: [root('src'), root('node_modules')],
-      alias: {
-        './environment': root('src', 'environments', options.APP_ENV + '.ts')
-      }
+      extensions: ['.ts', '.js', '.json']
     },
     module: {
       exprContextCritical: false,
       rules: [
         { test: /\.json$/, use: 'json-loader' },
-        { test: /\.html$/, use: 'raw-loader' },
         { test: /\.(jpg|png|gif)$/, use: 'file-loader' },
         { test: /\.(eot|woff2?|svg|ttf)([\?]?.*)$/, use: 'file-loader' },
         { test: /\.css$/, use: 'raw-loader' },
+        {
+          test: /\.html$/,
+          use: [
+            {
+              loader: 'html-loader',
+              options: {
+                minimize: false
+              }
+            }
+          ]
+        },
         {
           test: /\.js$/,
           use: ['source-map-loader'],
@@ -94,19 +100,32 @@ export default function(options: any): any {
       new webpack.NamedModulesPlugin(),
       new FriendlyErrorsWebpackPlugin(),
 
+      // load the configuration for the current environment (development, staging, production ...)
+      new webpack.NormalModuleReplacementPlugin(
+        /src\/environment.ts/,
+        root('src', 'environments', options.APP_ENV + '.ts')
+      ),
+
       new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr/),
 
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',
         environment,
-        chunksSortMode: orderByList(['vendor', 'polyfills', 'main', 'offline', 'css']),
+        chunksSortMode: orderByList([
+          'vendor',
+          'polyfills',
+          'main',
+          'offline',
+          'css'
+        ]),
         inject: 'body'
       }),
 
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         chunks: ['offline', 'main', 'polyfills'],
-        minChunks: module => module.context && module.context.indexOf('node_modules') !== -1
+        minChunks: module =>
+          module.context && module.context.indexOf('node_modules') !== -1
       }),
 
       new ngcWebpack.NgcWebpackPlugin({
@@ -122,17 +141,6 @@ export default function(options: any): any {
         // tslint:disable-next-line:object-literal-key-quotes
         TS_VERSION: JSON.stringify(TS_VERSION)
       }),
-
-      new CopyWebpackPlugin([
-        {
-          from: 'src/assets',
-          to: 'assets'
-        },
-        {
-          from: 'src/manifest.json',
-          to: ''
-        }
-      ]),
 
       extractSASS,
       extractLESS
