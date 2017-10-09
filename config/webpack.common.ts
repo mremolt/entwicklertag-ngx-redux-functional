@@ -102,7 +102,7 @@ export default function(options: any): any {
 
       // load the configuration for the current environment (development, staging, production ...)
       new webpack.NormalModuleReplacementPlugin(
-        /src\/environment.ts/,
+        /src[/\\]environment.ts/,
         root('src', 'environments', options.APP_ENV + '.ts')
       ),
 
