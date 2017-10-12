@@ -7,7 +7,6 @@ import commonConfig from './webpack.common';
 const Uglify = require('uglifyjs-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const ShakePlugin = require('webpack-common-shake').Plugin;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
@@ -45,12 +44,7 @@ export default webpackMerge(commonConfig(options), {
 
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new ShakePlugin({
-      warnings: {
-        global: false,
-        module: false
-      }
-    }),
+    new webpack.optimize.OccurrenceOrderPlugin(true),
 
     new Uglify({
       sourceMap: true

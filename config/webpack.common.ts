@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const TS_VERSION = require('typescript').version;
 const extractSASS = new ExtractTextPlugin('[name]-sass.css');
@@ -40,9 +41,7 @@ export default function(options: any): any {
           'resource-override.js'
         ),
         // tslint:disable-next-line:object-literal-key-quotes
-        ajv: root('config', 'resource-override.js'),
-        // tslint:disable-next-line:object-literal-key-quotes
-        validator: root('config', 'resource-override.js')
+        ajv: root('config', 'resource-override.js')
       }
     },
     module: {
@@ -120,7 +119,7 @@ export default function(options: any): any {
       ),
 
       // only add needed moment locales like /de.js|fr.js/
-      new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de.js/),
+      // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de.js/),
 
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',
@@ -155,6 +154,21 @@ export default function(options: any): any {
         // tslint:disable-next-line:object-literal-key-quotes
         TS_VERSION: JSON.stringify(TS_VERSION)
       }),
+
+      new CopyWebpackPlugin([
+        {
+          from: 'src/assets/favicon.ico',
+          to: 'assets'
+        },
+        {
+          from: 'src/assets/appicon.png',
+          to: 'assets'
+        },
+        {
+          from: 'src/manifest.json',
+          to: ''
+        }
+      ]),
 
       extractSASS,
       extractLESS
