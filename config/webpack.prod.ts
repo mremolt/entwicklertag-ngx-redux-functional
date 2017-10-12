@@ -1,3 +1,4 @@
+import * as webpack from 'webpack';
 import * as webpackMerge from 'webpack-merge';
 
 import { hasNpmFlag, root } from './helpers';
@@ -6,6 +7,7 @@ import commonConfig from './webpack.common';
 const Uglify = require('uglifyjs-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const ShakePlugin = require('webpack-common-shake').Plugin;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
@@ -42,6 +44,14 @@ export default webpackMerge(commonConfig(options), {
   },
 
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new ShakePlugin({
+      warnings: {
+        global: false,
+        module: false
+      }
+    }),
+
     new Uglify({
       sourceMap: true
     }),

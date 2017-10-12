@@ -4,8 +4,8 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "build",
-    "declaration": false,
-    "typeRoots": ["node_modules/@types"]
+    "declaration": false
+    // "typeRoots": ["node_modules/@types"]
   },
   "include": ["src/custom-typings.d.ts", "src/main.ts", "src/app/**/*.ts"]
 }

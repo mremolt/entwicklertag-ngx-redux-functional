@@ -18,7 +18,7 @@ export default function(options: any): any {
 
   return {
     entry: {
-      polyfills: polyfills.IE11,
+      polyfills: polyfills.MODERN,
       main: root('src', options.AOT ? 'main.aot.ts' : 'main.ts'),
       css: root('src', 'styles', 'application.scss')
     },
@@ -30,7 +30,20 @@ export default function(options: any): any {
     },
 
     resolve: {
-      extensions: ['.ts', '.js', '.json']
+      extensions: ['.ts', '.js', '.json'],
+      // remove all external dependencies not used in project until webpack can do some real tree shaking
+      // readd by removing the override if the feature gets used
+      alias: {
+        'transit-immutable-js': root('config', 'resource-override.js'),
+        'ajv/lib/refs/json-schema-draft-04.json': root(
+          'config',
+          'resource-override.js'
+        ),
+        // tslint:disable-next-line:object-literal-key-quotes
+        ajv: root('config', 'resource-override.js'),
+        // tslint:disable-next-line:object-literal-key-quotes
+        validator: root('config', 'resource-override.js')
+      }
     },
     module: {
       exprContextCritical: false,
@@ -106,7 +119,8 @@ export default function(options: any): any {
         root('src', 'environments', options.APP_ENV + '.ts')
       ),
 
-      new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr/),
+      // only add needed moment locales like /de.js|fr.js/
+      new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de.js/),
 
       new HtmlWebpackPlugin({
         template: 'src/index.ejs',

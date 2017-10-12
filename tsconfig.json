@@ -4,7 +4,6 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "build"
-    // "typeRoots": ["node_modules/@types"]
   },
   "include": ["src/custom-typings.d.ts", "src/**/*.ts", "spec/**/*.ts"],
   "exclude": ["src/main.aot.ts"]
