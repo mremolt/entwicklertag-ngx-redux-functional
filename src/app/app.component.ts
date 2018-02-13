@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.timeEnd('bootstrap angular');
     console.log('Site load:', performance.now().toFixed(2), 'ms');
     this.logBuildSetup(this.translate.currentLang);
 
@@ -33,8 +32,8 @@ export class AppComponent implements OnInit {
     console.log(
       this.translate.instant('BUILD_SETUP', {
         angularVersion: VERSION.full,
-        tsVersion: TS_VERSION,
-        env: ENV,
+        tsVersion: process.env.TS_VERSION,
+        env: process.env.NODE_ENV,
         locale
       })
     );

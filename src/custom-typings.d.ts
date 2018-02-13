@@ -1,6 +1,3 @@
-declare var ENV: string;
-declare var TS_VERSION: string;
-
 interface NodeModule {
   hot: any;
 }

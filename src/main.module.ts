@@ -1,6 +1,6 @@
-import { NgModule, ApplicationRef, NgZone, Inject } from '@angular/core';
+import { NgModule, Inject } from '@angular/core';
 import { NgReduxRouterModule, NgReduxRouter } from '@angular-redux/router';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import {
   NgRedux,
   DevToolsExtension,
@@ -22,8 +22,6 @@ import { AppModule } from './app/app.module';
 import { AppComponent } from './app/app.component';
 import { AppRestService } from './app/services/app-rest-service';
 
-console.time('bootstrap angular');
-
 export function provideEnvironment(): Environment {
   return new Environment();
 }
@@ -31,10 +29,10 @@ export function provideEnvironment(): Environment {
 @NgModule({
   bootstrap: [AppComponent],
   imports: [
-    HttpModule,
+    HttpClientModule,
     AppModule,
     NgReduxModule,
-    NgReduxRouterModule,
+    NgReduxRouterModule.forRoot(),
     NgxUtilsModule
   ],
   providers: [
@@ -45,10 +43,8 @@ export function provideEnvironment(): Environment {
 })
 export class MainModule extends MainBaseModule {
   constructor(
-    appRef: ApplicationRef,
     store: NgRedux<IState>,
     devTools: DevToolsExtension,
-    zone: NgZone,
     rootReducer: RootReducer,
     rootEpic: RootEpic,
     ngReduxRouter: NgReduxRouter,
@@ -56,10 +52,8 @@ export class MainModule extends MainBaseModule {
     @Inject(APP_ENVIRONMENT) environment: Environment
   ) {
     super(
-      appRef,
       store,
       devTools,
-      zone,
       rootReducer,
       rootEpic,
       ngReduxRouter,

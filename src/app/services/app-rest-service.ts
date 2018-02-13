@@ -1,4 +1,5 @@
-import { RequestOptions, Headers } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { RestService } from '@dcs/ngx-utils';
 
 /**
@@ -7,13 +8,18 @@ import { RestService } from '@dcs/ngx-utils';
  * Mainly used to add authentication or custom headers the foreign API needs.
  *
  * @export
- * @class AppRestService
- * @extends {RestService}
  */
+@Injectable()
 export class AppRestService extends RestService {
-  protected buildRequestOptions(options: RequestOptions): RequestOptions {
+  protected buildRequestOptions(options: any): any {
+    if (!options.headers) {
+      options.headers = new HttpHeaders({});
+    }
+
+    // example on how to add custom headers and activate credentials (== cookies for ajax requests).
+    options.headers = options.headers.append('X-FOO', 'bar');
     options.withCredentials = true;
-    (options.headers as Headers).append('X-FOO', 'bar');
-    return options;
+
+    return super.buildRequestOptions(options);
   }
 }

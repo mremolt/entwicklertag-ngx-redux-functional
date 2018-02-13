@@ -4,7 +4,7 @@ import {
   NgReduxTestingModule,
   MockNgRedux
 } from '@angular-redux/store/testing';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 import { HomeComponent } from '../src/app/home/home.component';
 import { HomeActions } from '../src/app/home/backend/home.actions';

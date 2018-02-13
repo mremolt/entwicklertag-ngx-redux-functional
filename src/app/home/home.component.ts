@@ -13,7 +13,7 @@ import { homeGreetingSelector } from './backend/home.selectors';
 })
 export class HomeComponent extends ContainerComponent implements OnInit {
   @select(homeGreetingSelector) public greeting$: Observable<string>;
-  public greeting: string;
+  public greeting: string = '';
 
   constructor(private homeActions: HomeActions) {
     super();
