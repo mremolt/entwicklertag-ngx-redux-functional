@@ -109,7 +109,7 @@ module.exports = {
   devtool: 'source-map',
 
   plugins: [
-    new CleanWebpackPlugin([path.resolve(root, 'dist')]),
+    new CleanWebpackPlugin(['dist'], { root: path.resolve(root) }),
     new ProgressPlugin(),
     new NoEmitOnErrorsPlugin(),
 
