@@ -6,8 +6,8 @@ import {
 } from '@angular-redux/store/testing';
 import { Subject } from 'rxjs/Subject';
 
-import { HomeComponent } from '../src/app/home/home.component';
-import { HomeActions } from '../src/app/home/backend/home.actions';
+import { HomeComponent } from './home.component';
+import { HomeActions } from './backend/home.actions';
 
 describe('testing a component as class', () => {
   let subject: HomeComponent;

@@ -4,12 +4,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
-const { AngularCompilerPlugin } = require('@ngtools/webpack');
-const { NoEmitOnErrorsPlugin, EnvironmentPlugin } = require('webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
-const TS_VERSION = require('typescript').version;
+const { AngularCompilerPlugin } = require('@ngtools/webpack');
+const {
+  NoEmitOnErrorsPlugin,
+  EnvironmentPlugin,
+  NormalModuleReplacementPlugin
+} = require('webpack');
 
 const root = process.cwd();
+const TS_VERSION = require('typescript').version;
+const APP_ENV = process.env.APP_ENV || 'development';
+
+const Environment = require(path.resolve(root, 'src', 'environments', APP_ENV))
+  .default;
+const environment = new Environment();
 
 const cssLoader = [
   {
@@ -123,13 +132,21 @@ module.exports = {
     ]),
 
     new EnvironmentPlugin({
-      TS_VERSION
+      TS_VERSION,
+      APP_ENV
     }),
+
+    // load the configuration for the current environment (development, staging, production ...)
+    new NormalModuleReplacementPlugin(
+      /src[/\\]environment.ts/,
+      path.resolve(root, 'src', 'environments', APP_ENV + '.ts')
+    ),
 
     new HtmlWebpackPlugin({
       template: 'src/index.ejs',
       chunks: ['polyfills', 'vendor', 'main', 'offline'],
-      chunksSortMode: 'manual'
+      chunksSortMode: 'manual',
+      environment
     }),
 
     new CommonsChunkPlugin({

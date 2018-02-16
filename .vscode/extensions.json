@@ -6,9 +6,7 @@
     "Angular.ng-template",
     "CoenraadS.bracket-pair-colorizer",
     "EditorConfig.editorconfig",
-    "Equinusocio.vsc-material-theme",
     "GregorBiswanger.json2ts",
-    "PKief.material-icon-theme",
     "Zignd.html-css-class-completion",
     "abierbaum.vscode-file-peek",
     "christian-kohler.npm-intellisense",
@@ -18,9 +16,7 @@
     "eg2.tslint",
     "eg2.vscode-npm-script",
     "esbenp.prettier-vscode",
-    "infinity1207.angular2-switcher",
     "jakethashi.vscode-angular2-emmet",
-    "joelday.docthis",
     "johnpapa.angular2",
     "kisstkondoros.vscode-codemetrics",
     "msjsdiag.debugger-for-chrome",
@@ -28,8 +24,8 @@
     "rbbit.typescript-hero",
     "robinbentley.sass-indented",
     "stringham.move-ts",
+    "thekalinga.bootstrap4-vscode",
     "wayou.vscode-todo-highlight",
-    "wcwhitehead.bootstrap-3-snippets",
     "xabikos.javascriptsnippets"
   ]
 }

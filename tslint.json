@@ -43,9 +43,6 @@
     "pipe-naming": [true, "camelCase", "dcs"],
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "templates-use-public": true,
-    "no-access-missing-member": false,
-    "invoke-injectable": true,
-    "template-to-ng-template": true
+    "no-access-missing-member": false
   }
 }
