@@ -4,9 +4,6 @@
   "codemetrics.basics.MetricsForClassDeclarationsToggled": false,
   "codemetrics.nodeconfiguration.AnyKeyword": 0,
   "files.autoSave": "onFocusChange",
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "es5",
-  "prettier.printWidth": 120,
   "search.exclude": {
     "**/node_modules": true,
     "dist": true,

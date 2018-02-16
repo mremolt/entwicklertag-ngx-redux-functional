@@ -4,11 +4,13 @@
   "description": "Sample project to show Angular project development at DCS Fürth",
   "main": "index.js",
   "scripts": {
-    "compile": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./node_modules/.bin/webpack --config config/webpack.config.production.ts",
+    "compile":
+      "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./node_modules/.bin/webpack --config config/webpack.config.production.ts",
     "build": "run-s lint test:coverage compile docs",
     "build:production": "cross-env APP_ENV=production npm run build",
     "build:staging": "cross-env APP_ENV=staging npm run build",
-    "watch": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./node_modules/.bin/webpack-dev-server --config webpack.config.ts",
+    "watch":
+      "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./node_modules/.bin/webpack-dev-server --config webpack.config.ts",
     "serve": "serve dist -p 8080 -c 0 -s",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -16,8 +18,10 @@
     "test:e2e": "protractor protractor.conf.js",
     "test:selenium": "webdriver-manager update && webdriver-manager start",
     "lint": "tslint --project tsconfig.json --exclude 'node_modules/**/*.ts'",
-    "docs": "typedoc --out dist/docs --excludeExternals --ignoreCompilerErrors --includeDeclarations --target ES6 --exclude 'spec/**/*.ts' --mode file ./src",
+    "docs":
+      "typedoc --out dist/docs --excludeExternals --ignoreCompilerErrors --includeDeclarations --target ES6 --exclude 'spec/**/*.ts' --mode file ./src",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "precommit": "lint-staged",
     "commit": "git cz",
     "commitmsg": "validate-commit-msg",
     "prepush": "npm run build:production",
@@ -61,10 +65,12 @@
     "json-server": "^0.12.1",
     "less": "^3.0.1",
     "less-loader": "^4.0.5",
+    "lint-staged": "^6.1.0",
     "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
     "offline-plugin": "^4.9.0",
     "postcss-loader": "^2.1.0",
+    "prettier": "^1.10.2",
     "protractor": "^5.3.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.6",
@@ -146,5 +152,8 @@
         "statements": 80
       }
     }
+  },
+  "lint-staged": {
+    "*.{js,json,css,scss,less,md}": ["prettier --write", "git add"]
   }
 }

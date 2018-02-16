@@ -8,11 +8,15 @@ describe('Protractor Demo App', function() {
 
     waitForElement(by.css('h3'));
 
-    element(by.model('first')).sendKeys(1);
-    element(by.model('second')).sendKeys(2);
+            element(by.model('first')).sendKeys(1);
+    element(by.model('second')).sendKeys(2)
+
+
+
+
 
     element(by.id('gobutton')).click();
 
-    expect(element(by.binding('latest')).getText()).toEqual('3'); // This is wrong!
+    expect(element(by.binding('latest')).getText()).toEqual('3');
   });
 });
