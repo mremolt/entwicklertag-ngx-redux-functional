@@ -8,12 +8,8 @@ describe('Protractor Demo App', function() {
 
     waitForElement(by.css('h3'));
 
-            element(by.model('first')).sendKeys(1);
-    element(by.model('second')).sendKeys(2)
-
-
-
-
+    element(by.model('first')).sendKeys(1);
+    element(by.model('second')).sendKeys(2);
 
     element(by.id('gobutton')).click();
 
