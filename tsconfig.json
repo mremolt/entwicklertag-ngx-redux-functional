@@ -6,7 +6,6 @@
     "sourceMap": true,
     "importHelpers": true,
     "strict": true,
-    "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
