@@ -3,7 +3,7 @@ import { NgRedux, select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
 import { IState } from '../backend/interfaces';
-import { fetchUser2, resetUser } from '../backend/users/users.actions';
+// import { fetchUser2, resetUser } from '../backend/users/users.actions';
 import { denormalizedCurrentUserState } from '../backend/users/current-user.selectors';
 
 @Component({
