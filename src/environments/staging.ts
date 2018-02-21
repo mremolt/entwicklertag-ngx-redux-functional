@@ -1,11 +1,8 @@
-import { Middleware, GenericStoreEnhancer } from 'redux';
+import { Environment } from './default-environment.class';
 
-export default class StagingEnvironment {
+export default class StagingEnvironment extends Environment {
   public apiUrl = 'http://jsonplaceholder.typicode.com';
   public throwOnSchemaError = true;
   public pageTitle = 'DCS Angular Starter (staging)';
   public base = '/';
-
-  public additionalMiddleware: Middleware[] = [];
-  public additionalEnhancers: GenericStoreEnhancer[] = [];
 }

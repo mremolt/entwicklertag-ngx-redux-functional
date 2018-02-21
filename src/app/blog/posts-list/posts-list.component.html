@@ -1,0 +1,38 @@
+<h2>Show Blog Posts</h2>
+
+<table class="table table-bordered table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let post of posts" dcsPostListElement [post]="post"></tr>
+
+    <tr>
+      <td colspan="3" class="progress-container">
+        <div class="progress" *ngIf="loading">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+            aria-valuemax="100" style="width: 100%"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="{ disabled: page <= 1 }">
+      <a class="page-link" routerLink="/blog/{{prevPage}}">Previous</a>
+    </li>
+    <li class="page-item disabled">
+      <span class="page-link">{{ page }}</span>
+    </li>
+    <li class="page-item">
+      <a class="page-link" routerLink="/blog/{{nextPage}}">Next</a>
+    </li>
+  </ul>
+</nav>

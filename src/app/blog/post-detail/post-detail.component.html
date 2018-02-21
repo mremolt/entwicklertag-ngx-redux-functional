@@ -1,0 +1,24 @@
+<div *ngIf="loaded">
+
+  <h1>{{ post.title }}</h1>
+
+  <div>
+    {{ post.body }}
+  </div>
+
+  <div>Created by {{ post.user.name }} &lt;{{ post.user.email }}&gt;</div>
+
+  <h2>Comments</h2>
+  <ul class="list-group" *ngFor="let comment of post.comments">
+    <li class="list-group-item">
+      <div>
+        {{ comment.body }}
+      </div>
+      <div>Created by {{ comment.email }}</div>
+    </li>
+  </ul>
+
+  <button type="button" class="btn btn-primary" (click)="location.back()">Back</button>
+</div>
+
+<div *ngIf="loading">loading ...</div>

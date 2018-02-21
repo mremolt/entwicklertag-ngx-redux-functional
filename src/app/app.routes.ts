@@ -6,4 +6,9 @@ export const routes: Routes = [
     path: 'home',
     loadChildren: './home/home.module#HomeModule',
   },
+
+  {
+    path: 'blog',
+    loadChildren: './blog/blog.module#BlogModule',
+  },
 ];

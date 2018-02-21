@@ -9,6 +9,11 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "@dcs/redux-utils": ["src/libs/redux-utils"],
+      "@dcs/ngx-utils": ["src/libs/ngx-utils"]
+    }
   }
 }

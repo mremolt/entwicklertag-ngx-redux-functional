@@ -1,4 +1,5 @@
 function buildProductionConfig() {
+  const path = require('path');
   const merge = require('webpack-merge');
   const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
   const OfflinePlugin = require('offline-plugin');
@@ -10,23 +11,43 @@ function buildProductionConfig() {
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
   const commonConfig = require('./webpack.config.common');
+  const root = process.cwd();
 
   return merge.smart(commonConfig, {
+    resolve: {
+      mainFields: ['module', 'main'],
+    },
     entry: {
-      offline: './src/service-worker.ts'
+      offline: './src/service-worker.ts',
     },
     devtool: 'source-map',
 
     module: {
       rules: [
         {
+          test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+          use: [
+            {
+              loader: '@ngtools/webpack',
+              options: {
+                tsConfigPath: path.resolve(root, 'tsconfig.json'),
+                compilerOptions: {
+                  // wait for https://github.com/angular/angular/issues/21948
+                  // SIGH ...
+                  target: 'es5',
+                },
+              },
+            },
+          ],
+        },
+        {
           test: /\.js$/,
           loader: '@angular-devkit/build-optimizer/webpack-loader',
           options: {
-            sourceMap: false
-          }
-        }
-      ]
+            sourceMap: false,
+          },
+        },
+      ],
     },
 
     plugins: [
@@ -38,15 +59,15 @@ function buildProductionConfig() {
         parallel: true,
         sourceMap: true,
         uglifyOptions: {
-          ecma: 6
-        }
+          ecma: 6,
+        },
       }),
 
       new PurifyPlugin(),
 
       new EnvironmentPlugin({
         NODE_ENV: 'production',
-        DEBUG: false
+        DEBUG: false,
       }),
 
       new OfflinePlugin({
@@ -55,21 +76,21 @@ function buildProductionConfig() {
         externals: ['/'],
         excludes: ['_redirects'], // for netlify if used
         ServiceWorker: {
-          events: true
-        }
+          events: true,
+        },
       }),
 
       new CompressionPlugin({
         regExp: /\.css$|\.html$|\.js$|\.map$/,
-        threshold: 2 * 1024
+        threshold: 2 * 1024,
       }),
 
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         reportFilename: 'report/bundle.html',
-        openAnalyzer: false
-      })
-    ]
+        openAnalyzer: false,
+      }),
+    ],
   });
 }
 
